@@ -1,0 +1,8 @@
+python-dotenv
+crawl4ai
+psycopg2-binary
+sqlalchemy
+langchain-text-splitters
+sentence-transformers
+weaviate-client
+certifi
