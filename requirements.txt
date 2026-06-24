@@ -10,3 +10,9 @@ weaviate-client
 certifi
 groq
 tenacity
+httpx
+playwright
+patchright
+huggingface-hub
+urllib3
+requests
