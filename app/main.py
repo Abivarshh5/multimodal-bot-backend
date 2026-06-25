@@ -132,6 +132,11 @@ def run_diag_route():
                     except:
                         pass
         results["found_1181_paths"] = found_1181
+
+        # Check /ms-playwright contents
+        import glob
+        results["ms_playwright_contents"] = glob.glob("/ms-playwright/**/*", recursive=True)[:50]
+        results["ms_playwright_exists"] = os.path.exists("/ms-playwright")
         
         return results
     except Exception as e:
