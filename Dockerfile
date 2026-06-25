@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 
 # Upgrade pip and install PyTorch CPU version first to prevent 2.5GB+ CUDA download causing Bus error / OOM
-RUN --mount=type=cache,id=pip,target=/root/.cache/pip \
+RUN --mount=type=cache,id=s/fc2149b5-f8bb-4d93-aa11-c18144e5c77f-/root/.cache/pip,target=/root/.cache/pip \
     pip install --upgrade pip && \
     pip install torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install -r requirements.txt
