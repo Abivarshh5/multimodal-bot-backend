@@ -17,11 +17,23 @@ app = FastAPI(title="Multimodal Shopping Assistant API")
 setup_cors(app)
 setup_error_handlers(app)
 
+import threading
+import subprocess
+import sys
 from app.db.database import init_db
+
+def install_browsers():
+    try:
+        print("Starting background browser installation...")
+        subprocess.run([sys.executable, "-m", "patchright", "install"], check=True)
+        print("Background browser installation completed successfully!")
+    except Exception as e:
+        print(f"Error during background browser installation: {e}")
 
 @app.on_event("startup")
 def on_startup():
     init_db()
+    threading.Thread(target=install_browsers, daemon=True).start()
 
 @app.get("/health", tags=["Health"])
 def health_check():
