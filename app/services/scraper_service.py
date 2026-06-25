@@ -13,6 +13,10 @@ BROWSER_CONFIG = BrowserConfig(
         "--disable-blink-features=AutomationControlled",
         "--disable-dev-shm-usage",
         "--no-sandbox",
+        "--disable-gpu",
+        "--disable-software-rasterizer",
+        "--disable-extensions",
+        "--js-flags=--max-old-space-size=256",
     ],
 )
 
@@ -35,7 +39,7 @@ async def patchright_extract_links(url: str) -> list:
             browser = await p.chromium.launch(
                 channel="chrome",
                 headless=True,
-                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled"],
+                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-software-rasterizer", "--disable-extensions"],
             )
             context = await browser.new_context(
                 ignore_https_errors=True,
@@ -69,7 +73,7 @@ async def patchright_scrape_page(url: str) -> str:
             browser = await p.chromium.launch(
                 channel="chrome",
                 headless=True,
-                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox"],
+                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-software-rasterizer", "--disable-extensions"],
             )
             context = await browser.new_context(
                 ignore_https_errors=True,
@@ -99,7 +103,7 @@ async def playwright_extract_links(url: str) -> list:
         async with playwright_async() as p:
             browser = await p.chromium.launch(
                 headless=True,
-                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox"],
+                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-software-rasterizer", "--disable-extensions"],
             )
             context = await browser.new_context(
                 ignore_https_errors=True,
@@ -132,7 +136,7 @@ async def playwright_scrape_page(url: str) -> str:
         async with playwright_async() as p:
             browser = await p.chromium.launch(
                 headless=True,
-                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled"],
+                args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-software-rasterizer", "--disable-extensions"],
             )
             context = await browser.new_context(
                 ignore_https_errors=True,

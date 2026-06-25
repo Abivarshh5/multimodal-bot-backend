@@ -15,7 +15,7 @@ from app.services.scraper_service import (
 )
 from app.utils.helpers import normalize_url
 
-CONCURRENCY = 15
+CONCURRENCY = 3
 MAX_URLS = 200
 ENABLE_RECURSIVE_CRAWL = True
 SITEMAP_RECURSIVE_THRESHOLD = 50

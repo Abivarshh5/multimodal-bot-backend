@@ -12,7 +12,7 @@ from app.services.scraper_service import BROWSER_CONFIG
 
 async def scrape_selected_urls(urls: list[str]) -> dict[str, str]:
     results = {}
-    semaphore = asyncio.Semaphore(5)
+    semaphore = asyncio.Semaphore(2)
 
     async def worker(crawler: AsyncWebCrawler, url: str):
         async with semaphore:
