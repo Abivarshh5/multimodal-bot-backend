@@ -97,8 +97,11 @@ def run_diag_route():
         results["pip_show_tf_playwright_stealth"] = {"stdout": res4.stdout, "stderr": res4.stderr}
         
         # 5. python -c version checks
-        res5 = subprocess.run([sys.executable, "-c", "import playwright; print(playwright.__version__)"], capture_output=True, text=True)
-        results["playwright_version_import"] = {"stdout": res5.stdout, "stderr": res5.stderr}
+        res5 = subprocess.run([sys.executable, "-c", "import asyncio; from playwright.async_api import async_playwright; print(asyncio.run(async_playwright().__aenter__()).chromium.executable_path)"], capture_output=True, text=True)
+        results["playwright_executable_path"] = {"stdout": res5.stdout, "stderr": res5.stderr}
+        
+        res6 = subprocess.run([sys.executable, "-c", "import asyncio; from patchright.async_api import async_playwright; print(asyncio.run(async_playwright().__aenter__()).chromium.executable_path)"], capture_output=True, text=True)
+        results["patchright_executable_path"] = {"stdout": res6.stdout, "stderr": res6.stderr}
         
         return results
     except Exception as e:
