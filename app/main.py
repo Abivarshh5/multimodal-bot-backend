@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import *  # loads env vars early
 from app.middleware.cors import setup_cors
+import uvicorn
 from app.middleware.error_handler import setup_error_handlers
 from app.routes import (
     chat_routes,
@@ -15,6 +16,10 @@ app = FastAPI(title="Multimodal Shopping Assistant API")
 
 setup_cors(app)
 setup_error_handlers(app)
+
+@app.get("/health", tags=["Health"])
+def health_check():
+    return {"status": "ok"}
 
 app.include_router(chat_routes.router, tags=["Chat"])
 app.include_router(datasource_routes.router, tags=["Data Sources"])

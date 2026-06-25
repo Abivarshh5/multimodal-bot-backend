@@ -1,11 +1,13 @@
 python-dotenv
 sqlalchemy
+langchain
 langchain-text-splitters
 fastapi
 uvicorn[standard]
 websockets
 sentence-transformers
 weaviate-client
+openai
 groq
 asyncpg
 psycopg2-binary
@@ -13,4 +15,6 @@ tenacity
 crawl4ai
 beautifulsoup4
 playwright
+requests
+httpx
 certifi
