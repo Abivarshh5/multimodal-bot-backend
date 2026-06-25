@@ -62,6 +62,18 @@ def list_cache_route():
     except Exception as e:
         return {"status": "error", "error": str(e)}
 
+@app.get("/reset-all", tags=["Diagnostics"])
+def reset_all_route():
+    from app.db.postgres import execute_query
+    try:
+        execute_query("DELETE FROM crawled_pages")
+        execute_query("DELETE FROM crawl_status")
+        execute_query("DELETE FROM brand_profile")
+        execute_query("DELETE FROM websites")
+        return {"status": "success", "message": "All data sources, pages, and statuses deleted successfully."}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 @app.get("/install-browser", tags=["Diagnostics"])
 def install_browser_route(force: bool = False):
     import subprocess
