@@ -36,7 +36,6 @@ async def patchright_extract_links(url: str) -> list:
         domain = urlparse(url).netloc.lower()
         async with patchright_async() as p:
             browser = await p.chromium.launch(
-                channel="chrome",
                 headless=True,
                 args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-software-rasterizer", "--disable-extensions"],
             )
@@ -70,7 +69,6 @@ async def patchright_scrape_page(url: str) -> str:
         domain = urlparse(url).netloc.lower()
         async with patchright_async() as p:
             browser = await p.chromium.launch(
-                channel="chrome",
                 headless=True,
                 args=["--ignore-certificate-errors", "--allow-running-insecure-content", "--disable-blink-features=AutomationControlled", "--disable-dev-shm-usage", "--no-sandbox", "--disable-gpu", "--disable-software-rasterizer", "--disable-extensions"],
             )
