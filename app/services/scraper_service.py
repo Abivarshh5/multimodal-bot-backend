@@ -27,7 +27,6 @@ CRAWL_CONFIG = CrawlerRunConfig(
     wait_until="domcontentloaded",
     page_timeout=20000,
     delay_before_return_html=0.5,
-    max_retries=1,
 )
 
 
