@@ -40,13 +40,16 @@ def health_check():
     return {"status": "ok"}
 
 @app.get("/install-browser", tags=["Diagnostics"])
-def install_browser_route():
+def install_browser_route(force: bool = False):
     import subprocess
     import sys
     try:
-        print("Synchronous browser installation triggered...")
+        print(f"Synchronous browser installation triggered (force={force})...")
+        cmd = [sys.executable, "-m", "patchright", "install"]
+        if force:
+            cmd.append("--force")
         res = subprocess.run(
-            [sys.executable, "-m", "patchright", "install"],
+            cmd,
             capture_output=True,
             text=True,
             check=True
