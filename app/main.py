@@ -17,6 +17,12 @@ app = FastAPI(title="Multimodal Shopping Assistant API")
 setup_cors(app)
 setup_error_handlers(app)
 
+from app.db.database import init_db
+
+@app.on_event("startup")
+def on_startup():
+    init_db()
+
 @app.get("/health", tags=["Health"])
 def health_check():
     return {"status": "ok"}
