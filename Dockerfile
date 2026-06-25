@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/playwright/python:v1.54.0-jammy
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
-ENV PLAYWRIGHT_BROWSERS_PATH=/home/pwuser/.cache/ms-playwright
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 WORKDIR /app
 
@@ -38,16 +38,21 @@ RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ==========================================
+# Install Crawl4AI/Playwright Browsers (as root)
+# ==========================================
+# Since PLAYWRIGHT_BROWSERS_PATH is set to /ms-playwright,
+# crawl4ai-setup will install Patchright's chromium-1223 here.
+RUN crawl4ai-setup
+
+# Ensure the non-root user 'pwuser' owns the browser directories
+RUN chown -R pwuser:pwuser /ms-playwright
+
+# ==========================================
 # Copy Source Code
 # ==========================================
 COPY --chown=pwuser:pwuser . .
 
 USER pwuser
-
-# ==========================================
-# Install Crawl4AI/Playwright Browsers
-# ==========================================
-RUN python -m playwright install chromium && crawl4ai-setup
 
 # ==========================================
 # Health Check
