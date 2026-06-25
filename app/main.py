@@ -117,6 +117,21 @@ def run_diag_route():
 
         import os
         results["env_vars"] = {k: v for k, v in os.environ.items() if "PLAYWRIGHT" in k or "CRAWL" in k or "PATH" in k}
+
+        # Find where 1181 is defined in playwright package
+        import playwright
+        found_1181 = []
+        for root_dir, dirs, files in os.walk(os.path.dirname(playwright.__file__)):
+            for file in files:
+                if file.endswith('.py') or file.endswith('.json'):
+                    p = os.path.join(root_dir, file)
+                    try:
+                        content = open(p, errors='ignore').read()
+                        if '1181' in content:
+                            found_1181.append(p)
+                    except:
+                        pass
+        results["found_1181_paths"] = found_1181
         
         return results
     except Exception as e:
