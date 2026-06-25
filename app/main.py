@@ -103,6 +103,15 @@ def run_diag_route():
         res6 = subprocess.run([sys.executable, "-c", "import asyncio; from patchright.async_api import async_playwright; print(asyncio.run(async_playwright().__aenter__()).chromium.executable_path)"], capture_output=True, text=True)
         results["patchright_executable_path"] = {"stdout": res6.stdout, "stderr": res6.stderr}
         
+        res7 = subprocess.run([sys.executable, "-c", "import playwright; print(playwright.__file__)"], capture_output=True, text=True)
+        results["playwright_file"] = {"stdout": res7.stdout, "stderr": res7.stderr}
+
+        res8 = subprocess.run([sys.executable, "-c", "import patchright; print(patchright.__file__)"], capture_output=True, text=True)
+        results["patchright_file"] = {"stdout": res8.stdout, "stderr": res8.stderr}
+
+        res9 = subprocess.run([sys.executable, "-c", "import pkg_resources; print(pkg_resources.get_distribution('playwright').version)"], capture_output=True, text=True)
+        results["playwright_pkg_version"] = {"stdout": res9.stdout, "stderr": res9.stderr}
+        
         return results
     except Exception as e:
         return {"error": str(e)}
