@@ -74,6 +74,28 @@ def reset_all_route():
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+@app.get("/run-diag", tags=["Diagnostics"])
+def run_diag_route():
+    import subprocess
+    import sys
+    results = {}
+    try:
+        # 1. pip show patchright
+        res1 = subprocess.run([sys.executable, "-m", "pip", "show", "patchright"], capture_output=True, text=True)
+        results["pip_show_patchright"] = {"stdout": res1.stdout, "stderr": res1.stderr}
+        
+        # 2. pip show playwright
+        res2 = subprocess.run([sys.executable, "-m", "pip", "show", "playwright"], capture_output=True, text=True)
+        results["pip_show_playwright"] = {"stdout": res2.stdout, "stderr": res2.stderr}
+        
+        # 3. patchright install dry-run
+        res3 = subprocess.run([sys.executable, "-m", "patchright", "install", "--dry-run"], capture_output=True, text=True)
+        results["patchright_dry_run"] = {"stdout": res3.stdout, "stderr": res3.stderr}
+        
+        return results
+    except Exception as e:
+        return {"error": str(e)}
+
 @app.get("/install-browser", tags=["Diagnostics"])
 def install_browser_route(force: bool = False):
     import subprocess
