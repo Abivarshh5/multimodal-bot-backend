@@ -39,6 +39,24 @@ def on_startup():
 def health_check():
     return {"status": "ok"}
 
+@app.get("/install-browser", tags=["Diagnostics"])
+def install_browser_route():
+    import subprocess
+    import sys
+    try:
+        print("Synchronous browser installation triggered...")
+        res = subprocess.run(
+            [sys.executable, "-m", "patchright", "install"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        return {"status": "success", "stdout": res.stdout, "stderr": res.stderr}
+    except subprocess.CalledProcessError as e:
+        return {"status": "failed", "error": str(e), "stdout": e.stdout, "stderr": e.stderr}
+    except Exception as e:
+        return {"status": "failed", "error": str(e)}
+
 app.include_router(chat_routes.router, tags=["Chat"])
 app.include_router(datasource_routes.router, tags=["Data Sources"])
 app.include_router(training_routes.router, tags=["Training"])
