@@ -39,6 +39,29 @@ def on_startup():
 def health_check():
     return {"status": "ok"}
 
+@app.get("/list-cache", tags=["Diagnostics"])
+def list_cache_route():
+    import os
+    import pathlib
+    try:
+        home = pathlib.Path.home()
+        cache_path = home / ".cache"
+        
+        result = []
+        if cache_path.exists():
+            for root, dirs, files in os.walk(cache_path):
+                for file in files:
+                    full_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(full_path, home)
+                    size = os.path.getsize(full_path)
+                    result.append(f"{rel_path} ({size} bytes)")
+        else:
+            result.append(f"Cache path {cache_path} does not exist")
+            
+        return {"home": str(home), "files": result}
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
 @app.get("/install-browser", tags=["Diagnostics"])
 def install_browser_route(force: bool = False):
     import subprocess
