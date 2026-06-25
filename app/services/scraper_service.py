@@ -6,7 +6,7 @@ from crawl4ai import AsyncWebCrawler, BrowserConfig, CrawlerRunConfig, CacheMode
 STEALTH_DOMAINS = {"nowsecure.nl", "pixelscan.dev", "browserleaks.com", "bot-detector.rebrowser.net", "edwarddonner.com"}
 
 BROWSER_CONFIG = BrowserConfig(
-    browser_type="undetected",
+    browser_type="chromium",
     headless=True,
     enable_stealth=True,
     extra_args=[
