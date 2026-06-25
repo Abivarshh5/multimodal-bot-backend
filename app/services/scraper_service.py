@@ -8,7 +8,7 @@ STEALTH_DOMAINS = {"nowsecure.nl", "pixelscan.dev", "browserleaks.com", "bot-det
 BROWSER_CONFIG = BrowserConfig(
     browser_type="chromium",
     headless=True,
-    enable_stealth=True,
+    enable_stealth=False,
     extra_args=[
         "--disable-blink-features=AutomationControlled",
         "--disable-dev-shm-usage",
