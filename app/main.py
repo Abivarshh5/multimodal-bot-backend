@@ -114,6 +114,9 @@ def run_diag_route():
 
         res10 = subprocess.run([sys.executable, "-c", "import os, playwright; p = os.path.join(os.path.dirname(playwright.__file__), 'driver', 'package', 'package.json'); print(open(p).read() if os.path.exists(p) else 'Not Found')"], capture_output=True, text=True)
         results["playwright_driver_package_json"] = {"stdout": res10.stdout, "stderr": res10.stderr}
+
+        import os
+        results["env_vars"] = {k: v for k, v in os.environ.items() if "PLAYWRIGHT" in k or "CRAWL" in k or "PATH" in k}
         
         return results
     except Exception as e:
