@@ -40,6 +40,11 @@ RUN --mount=type=cache,id=s/fc2149b5-f8bb-4d93-aa11-c18144e5c77f-/root/.cache/pi
     pip install torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install -r requirements.txt
 
+# Configure Playwright to install browser binaries in a custom system path accessible by non-root users
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN playwright install --with-deps chromium && \
+    chmod -R 755 /ms-playwright
+
 # ==========================================
 # Stage 4: Source Code & Security
 # ==========================================
