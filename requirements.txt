@@ -13,6 +13,7 @@ websockets==15.0.1
 sentence-transformers==5.0.0
 
 weaviate-client==4.16.8
+protobuf
 
 openai==1.97.1
 
