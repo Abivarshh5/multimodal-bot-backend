@@ -29,6 +29,7 @@ crawl4ai==0.7.3
 beautifulsoup4==4.13.4
 
 playwright==1.54.0
+playwright-stealth>=2.0.0
 
 requests==2.32.4
 
