@@ -40,16 +40,17 @@ RUN --mount=type=cache,id=s/fc2149b5-f8bb-4d93-aa11-c18144e5c77f-/root/.cache/pi
     pip install torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install -r requirements.txt
 
-# Configure Playwright to install browser binaries in a custom system path accessible by non-root users
-ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
-RUN playwright install --with-deps chromium && \
-    chmod -R 755 /ms-playwright
-
 # ==========================================
 # Stage 4: Source Code & Security
 # ==========================================
 # Create a non-root user (appuser) for production security best practices
 RUN useradd -m -u 1000 appuser
+
+# Install Playwright system dependencies and move browser binaries to appuser's default cache directory
+RUN playwright install --with-deps chromium && \
+    mkdir -p /home/appuser/.cache && \
+    mv /root/.cache/ms-playwright /home/appuser/.cache/ms-playwright && \
+    chown -R appuser:appuser /home/appuser/.cache
 
 # Copy project source code and assign ownership to the non-root user
 COPY --chown=appuser:appuser . .
