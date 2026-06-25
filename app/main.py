@@ -111,6 +111,9 @@ def run_diag_route():
 
         res9 = subprocess.run([sys.executable, "-c", "import pkg_resources; print(pkg_resources.get_distribution('playwright').version)"], capture_output=True, text=True)
         results["playwright_pkg_version"] = {"stdout": res9.stdout, "stderr": res9.stderr}
+
+        res10 = subprocess.run([sys.executable, "-c", "import os, playwright; p = os.path.join(os.path.dirname(playwright.__file__), 'driver', 'package', 'package.json'); print(open(p).read() if os.path.exists(p) else 'Not Found')"], capture_output=True, text=True)
+        results["playwright_driver_package_json"] = {"stdout": res10.stdout, "stderr": res10.stderr}
         
         return results
     except Exception as e:
