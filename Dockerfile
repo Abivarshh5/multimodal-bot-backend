@@ -37,16 +37,11 @@ RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ==========================================
-# Create Non-Root User
-# ==========================================
-RUN useradd -m -u 1000 appuser
-
-# ==========================================
 # Copy Source Code
 # ==========================================
-COPY --chown=appuser:appuser . .
+COPY --chown=pwuser:pwuser . .
 
-USER appuser
+USER pwuser
 
 # ==========================================
 # Health Check
