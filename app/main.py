@@ -88,9 +88,17 @@ def run_diag_route():
         res2 = subprocess.run([sys.executable, "-m", "pip", "show", "playwright"], capture_output=True, text=True)
         results["pip_show_playwright"] = {"stdout": res2.stdout, "stderr": res2.stderr}
         
-        # 3. patchright install dry-run
-        res3 = subprocess.run([sys.executable, "-m", "patchright", "install", "--dry-run"], capture_output=True, text=True)
-        results["patchright_dry_run"] = {"stdout": res3.stdout, "stderr": res3.stderr}
+        # 3. pip show playwright-stealth
+        res3 = subprocess.run([sys.executable, "-m", "pip", "show", "playwright-stealth"], capture_output=True, text=True)
+        results["pip_show_playwright_stealth"] = {"stdout": res3.stdout, "stderr": res3.stderr}
+        
+        # 4. pip show tf-playwright-stealth
+        res4 = subprocess.run([sys.executable, "-m", "pip", "show", "tf-playwright-stealth"], capture_output=True, text=True)
+        results["pip_show_tf_playwright_stealth"] = {"stdout": res4.stdout, "stderr": res4.stderr}
+        
+        # 5. python -c version checks
+        res5 = subprocess.run([sys.executable, "-c", "import playwright; print(playwright.__version__)"], capture_output=True, text=True)
+        results["playwright_version_import"] = {"stdout": res5.stdout, "stderr": res5.stderr}
         
         return results
     except Exception as e:
