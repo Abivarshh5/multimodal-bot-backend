@@ -10,6 +10,7 @@ FROM mcr.microsoft.com/playwright/python:v1.54.0-jammy
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000
+ENV PLAYWRIGHT_BROWSERS_PATH=/home/pwuser/.cache/ms-playwright
 
 WORKDIR /app
 
@@ -42,6 +43,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --chown=pwuser:pwuser . .
 
 USER pwuser
+
+# ==========================================
+# Install Crawl4AI/Playwright Browsers
+# ==========================================
+RUN crawl4ai-setup
 
 # ==========================================
 # Health Check
