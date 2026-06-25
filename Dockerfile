@@ -47,7 +47,7 @@ USER pwuser
 # ==========================================
 # Install Crawl4AI/Playwright Browsers
 # ==========================================
-RUN crawl4ai-setup
+RUN python -m playwright install chromium && crawl4ai-setup
 
 # ==========================================
 # Health Check
