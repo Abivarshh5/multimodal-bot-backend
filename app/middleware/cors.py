@@ -9,7 +9,9 @@ def setup_cors(app: FastAPI):
     allowed_origins = [
         frontend_url,
         "http://localhost:5173",
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://multimodal-bot-frontend-bij2.vercel.app",
+        "https://multimodal-bot-frontend-bij2.vercel.app/"
     ]
     
     app.add_middleware(
